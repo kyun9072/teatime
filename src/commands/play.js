@@ -4,8 +4,9 @@ const fs = require('fs');
 let search = require('youtube-search');
 let opts = {
   maxResults: 1,
-  key: process.env.YOUTUBE_TOKEN,
-  type: 'video'
+  quality: 'highestaudio',
+  format: 'mp3',	
+  key: process.env.YOUTUBE_TOKEN
 };
 module.exports = {
 	name: 'p',
