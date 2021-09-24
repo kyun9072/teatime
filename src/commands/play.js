@@ -1,5 +1,6 @@
 const { Util } = require('discord.js');
 const ytdl = require('ytdl-core');
+const fs = require('fs');
 let search = require('youtube-search');
 let opts = {
   maxResults: 1,
