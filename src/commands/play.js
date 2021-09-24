@@ -70,7 +70,7 @@ module.exports = {
 				message.client.queue.delete(message.guild.id);
 				return;
 			}
-			const dispatcher = queue.connection.play(ytdl(song.url).pipe(fs.createWriteStream('video.mp4')))
+			const dispatcher = queue.connection.play(ytdl(song.url))
 				.on('finish', () => {
 					queue.songs.shift();
 					play(queue.songs[0]);
