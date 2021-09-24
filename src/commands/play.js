@@ -28,7 +28,7 @@ module.exports = {
 			}
 		}
 		
-		let song = await search(reqKey, opt, async function(err, results) {
+		let song = await search(reqKey, opts, async function(err, results) {
 		  if(err) return console.log(err);
 		  console.dir(reqKey);
 		  console.dir(args);
