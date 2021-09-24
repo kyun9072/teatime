@@ -71,7 +71,13 @@ module.exports = {
 				message.client.queue.delete(message.guild.id);
 				return;
 			}
-			const dispatcher = queue.connection.play(ytdl(song.url))
+			let input = ytdl(song.url,  {
+				    filter: "audioonly",
+				    quality: "highestaudio",
+				    highWaterMark: 1 << 25,
+				    passArgs: ['-af', 'equalizer=f=40:width_type=h:width=50:g=10'] // custom ffmpeg args
+				});
+			const dispatcher = queue.connection.play(input)
 				.on('finish', () => {
 					queue.songs.shift();
 					play(queue.songs[0]);
