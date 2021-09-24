@@ -24,7 +24,7 @@ module.exports = {
 		  console.dir(results[0].id);
 		  console.dir(results[0].link);
 		  console.dir(results[0].title);
-		  return message.channel.send(args +'원본=>리플' +args[0].replace(/<(.+)>/g, '$1'));
+		 
 		  let song = {
 				id: results[0].id,
 				title: Util.escapeMarkdown(results[0].title),
@@ -66,7 +66,7 @@ module.exports = {
 				})
 				.on('error', error => console.error(error));
 			dispatcher.setVolumeLogarithmic(queue.volume / 5);
-			queue.textChannel.send(`🎶 Start playing: **${song.title}**`);
+			queue.textChannel.send(`🎶 Start playing: **${args}**`);
 		};
 
 		try {
