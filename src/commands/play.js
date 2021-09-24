@@ -1,5 +1,5 @@
 const { Util } = require('discord.js');
-const ytdl = require('ytdl-core');
+const ytdl = require('discord-ytdl-core');
 const fs = require('fs');
 let search = require('youtube-search');
 let opts = {
@@ -70,13 +70,15 @@ module.exports = {
 				message.client.queue.delete(message.guild.id);
 				return;
 			}
+			
 			let stream = ytdl(song.url, {
-			    filter: "audioonly",
-			    opusEncoded: true,
-			    encoderArgs: ['-af', 'bass=g=10,dynaudnorm=f=200']
+				filter: "audioonly",
+				opusEncoded: false,
+				encoderArgs: ['-af', 'bass=g=10,dynaudnorm=f=200']
 			});
+			
 			const dispatcher = queue.connection.play(stream, {
-					type: "opus"
+					type: "converted"
 				})
 				.on('finish', () => {
 					queue.songs.shift();
