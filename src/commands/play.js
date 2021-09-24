@@ -74,10 +74,12 @@ module.exports = {
 			let input = ytdl(song.url,  {
 				    filter: "audioonly",
 				    quality: "highestaudio",
-				    highWaterMark: 1 << 25,
-				    passArgs: ['-af', 'equalizer=f=40:width_type=h:width=50:g=10'] // custom ffmpeg args
+				    opusEncoded: true,
+         			    encoderArgs: ['-af', 'bass=g=10,dynaudnorm=f=200']
 				});
-			const dispatcher = queue.connection.play(input)
+			const dispatcher = queue.connection.play(input, {
+				type: "opus"
+			    	})
 				.on('finish', () => {
 					queue.songs.shift();
 					play(queue.songs[0]);
