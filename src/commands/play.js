@@ -14,13 +14,23 @@ module.exports = {
 	cooldown: 5,
 	async execute(message, args) {
 		const { channel } = message.member.voice;
+		
 		if (!channel) return message.channel.send('I\'m sorry but you need to be in a voice channel to play music!');
 		const permissions = channel.permissionsFor(message.client.user);
 		if (!permissions.has('CONNECT')) return message.channel.send('I cannot connect to your voice channel, make sure I have the proper permissions!');
 		if (!permissions.has('SPEAK')) return message.channel.send('I cannot speak in this voice channel, make sure I have the proper permissions!');
-
-		let song = await search(args[0].replace(/<(.+)>/g, '$1'), opts, async function(err, results) {
+		var reqKey = '';
+		for (var i = 0; i < args.length; i++) {
+			if (i != args.length -1){
+				reqKey += args[i] + ' ';	
+			} else {
+				reqKey += args[i];	
+			}
+		}
+		
+		let song = await search(reqKey, opts, async function(err, results) {
 		  if(err) return console.log(err);
+		  console.dir(reqKey);
 		  console.dir(args);
 		  console.dir(args[0].replace(/<(.+)>/g, '$1'));
 		  console.dir(results[0].id);
