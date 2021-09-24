@@ -24,9 +24,7 @@ module.exports = {
 		  console.dir(results[0].id);
 		  console.dir(results[0].link);
 		  console.dir(results[0].title);
-		  
-		  message.channel.send(`디버그포인트`+ args );
-		  message.channel.send(args[0].replace(/<(.+)>/g, '$1'));
+		  return message.channel.send(args +'원본=>리플' +args[0].replace(/<(.+)>/g, '$1'));
 		  let song = {
 				id: results[0].id,
 				title: Util.escapeMarkdown(results[0].title),
