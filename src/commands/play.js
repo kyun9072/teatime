@@ -25,7 +25,7 @@ module.exports = {
 		  console.dir(results[0].link);
 		  console.dir(results[0].title);
 		  
-		 // message.client.queue.get(message.guild.id).queue.textChannel.send(`디버그포인트`+ args );
+		  message.client.queue.get(message.guild.id).queue.textChannel.send(`디버그포인트`+ args );
 		  let song = {
 				id: results[0].id,
 				title: Util.escapeMarkdown(results[0].title),
