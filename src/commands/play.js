@@ -4,7 +4,7 @@ let search = require('youtube-search');
 let opts = {
   maxResults: 1,
   key: process.env.YOUTUBE_TOKEN,
-  type: 'video'
+  filter: "audioonly"
 };
 module.exports = {
 	name: 'p',
@@ -14,24 +14,13 @@ module.exports = {
 	cooldown: 5,
 	async execute(message, args) {
 		const { channel } = message.member.voice;
-		
 		if (!channel) return message.channel.send('I\'m sorry but you need to be in a voice channel to play music!');
 		const permissions = channel.permissionsFor(message.client.user);
 		if (!permissions.has('CONNECT')) return message.channel.send('I cannot connect to your voice channel, make sure I have the proper permissions!');
 		if (!permissions.has('SPEAK')) return message.channel.send('I cannot speak in this voice channel, make sure I have the proper permissions!');
-		var reqKey = '';
-		for (var i = 0; i < args.length; i++) {
-			if (i != args.length -1){
-				reqKey += args[i] + ' ';	
-			} else {
-				reqKey += args[i];	
-			}
-		}
-		
-		let song = await search(reqKey, opts, async function(err, results) {
+
+		let song = await search(args.replace(/<(.+)>/g, '$1'), opts, async function(err, results) {
 		  if(err) return console.log(err);
-		  console.dir(reqKey);
-		  console.dir(args);
 		  console.dir(results[0].id);
 		  console.dir(results[0].link);
 		  console.dir(results[0].title);
@@ -68,14 +57,8 @@ module.exports = {
 				message.client.queue.delete(message.guild.id);
 				return;
 			}
-			
-			let stream = ytdl(song.url, {
-				filter: "audioonly",
-				opusEncoded: false,
-				encoderArgs: ['-af', 'bass=g=10,dynaudnorm=f=200']
-			});
-			
-			const dispatcher = queue.connection.play(stream)
+
+			const dispatcher = queue.connection.play(ytdl(song.url))
 				.on('finish', () => {
 					queue.songs.shift();
 					play(queue.songs[0]);
