@@ -75,9 +75,7 @@ module.exports = {
 				encoderArgs: ['-af', 'bass=g=10,dynaudnorm=f=200']
 			});
 			
-			const dispatcher = queue.connection.playStream(stream, {
-					type: "converted"
-				})
+			const dispatcher = queue.connection.play(stream)
 				.on('finish', () => {
 					queue.songs.shift();
 					play(queue.songs[0]);
