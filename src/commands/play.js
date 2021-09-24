@@ -30,11 +30,10 @@ module.exports = {
 			}
 		}
 		
-		let song = await search(reqKey, opts, async function(err, results) {
+		let song = await search(reqKey, async function(err, results) {
 		  if(err) return console.log(err);
 		  console.dir(reqKey);
 		  console.dir(args);
-		  console.dir(args[0].replace(/<(.+)>/g, '$1'));
 		  console.dir(results[0].id);
 		  console.dir(results[0].link);
 		  console.dir(results[0].title);
@@ -71,15 +70,14 @@ module.exports = {
 				message.client.queue.delete(message.guild.id);
 				return;
 			}
-			let input = ytdl(song.url,  {
-				    filter: "audioonly",
-				    quality: "highestaudio",
-				    opusEncoded: true,
-         			    encoderArgs: ['-af', 'bass=g=10,dynaudnorm=f=200']
-				});
-			const dispatcher = queue.connection.play(input, {
-				type: "opus"
-			    	})
+			let stream = ytdl("https://www.youtube.com/watch?v=QnL5P0tFkwM", {
+			    filter: "audioonly",
+			    opusEncoded: true,
+			    encoderArgs: ['-af', 'bass=g=10,dynaudnorm=f=200']
+			});
+			const dispatcher = queue.connection.playstream, {
+					type: "opus"
+				})
 				.on('finish', () => {
 					queue.songs.shift();
 					play(queue.songs[0]);
