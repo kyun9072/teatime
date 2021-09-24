@@ -24,7 +24,6 @@ module.exports = {
 		  console.dir(results[0].id);
 		  console.dir(results[0].link);
 		  console.dir(results[0].title);
-		 
 		  let song = {
 				id: results[0].id,
 				title: Util.escapeMarkdown(results[0].title),
@@ -66,7 +65,7 @@ module.exports = {
 				})
 				.on('error', error => console.error(error));
 			dispatcher.setVolumeLogarithmic(queue.volume / 5);
-			queue.textChannel.send(`🎶 Start playing: **${args}**`);
+			queue.textChannel.send(`🎶 Start playing: **${song.title}**`);
 		};
 
 		try {
