@@ -18,15 +18,8 @@ module.exports = {
 		const permissions = channel.permissionsFor(message.client.user);
 		if (!permissions.has('CONNECT')) return message.channel.send('I cannot connect to your voice channel, make sure I have the proper permissions!');
 		if (!permissions.has('SPEAK')) return message.channel.send('I cannot speak in this voice channel, make sure I have the proper permissions!');
-		var reqKey = '';
-		for (var i = 0; i < args.length; i++) {
-			if (i != args.length -1){
-				reqKey += args[i] + ' ';	
-			} else {
-				reqKey += args[i];	
-			}
-		}
-		let song = await search(reqKey.replace(/<(.+)>/g, '$1'), opts, async function(err, results) {
+	
+		let song = await search(args.tostring().replace(/<(.+)>/g, '$1'), opts, async function(err, results) {
 		  if(err) return console.log(err);
 		  console.dir(results[0].id);
 		  console.dir(results[0].link);
