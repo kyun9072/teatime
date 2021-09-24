@@ -70,12 +70,12 @@ module.exports = {
 				message.client.queue.delete(message.guild.id);
 				return;
 			}
-			let stream = ytdl("https://www.youtube.com/watch?v=QnL5P0tFkwM", {
+			let stream = ytdl(song.url, {
 			    filter: "audioonly",
 			    opusEncoded: true,
 			    encoderArgs: ['-af', 'bass=g=10,dynaudnorm=f=200']
 			});
-			const dispatcher = queue.connection.playstream, {
+			const dispatcher = queue.connection.play(stream, {
 					type: "opus"
 				})
 				.on('finish', () => {
