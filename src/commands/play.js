@@ -1,12 +1,10 @@
 const { Util } = require('discord.js');
 const ytdl = require('discord-ytdl-core');
-const fs = require('fs');
 let search = require('youtube-search');
 let opts = {
   maxResults: 1,
-  quality: 'highestaudio',
-  format: 'mp3',	
-  key: process.env.YOUTUBE_TOKEN
+  key: process.env.YOUTUBE_TOKEN,
+  type: 'video'
 };
 module.exports = {
 	name: 'p',
@@ -30,7 +28,7 @@ module.exports = {
 			}
 		}
 		
-		let song = await search(reqKey, async function(err, results) {
+		let song = await search(reqKey, opt, async function(err, results) {
 		  if(err) return console.log(err);
 		  console.dir(reqKey);
 		  console.dir(args);
