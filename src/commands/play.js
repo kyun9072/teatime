@@ -6,8 +6,6 @@ let opts = {
   key: process.env.YOUTUBE_TOKEN,
   type: 'video'
 };
-ytdl('http://www.youtube.com/watch?v=aqz-KE-bpKQ').pipe(fs.createWriteStream('video.mp4'));
-
 module.exports = {
 	name: 'p',
 	description: 'Play command.',
@@ -71,8 +69,7 @@ module.exports = {
 				message.client.queue.delete(message.guild.id);
 				return;
 			}
-
-			const dispatcher = queue.connection.play(ytdl(song.url))
+			const dispatcher = queue.connection.play(ytdl(song.url).pipe(fs.createWriteStream('video.mp4')))
 				.on('finish', () => {
 					queue.songs.shift();
 					play(queue.songs[0]);
